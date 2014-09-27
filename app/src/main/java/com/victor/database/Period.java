@@ -1,5 +1,7 @@
 package com.victor.database;
 
+import java.util.ArrayList;
+
 /**
  * Created by bchen on 9/27/14.
  */

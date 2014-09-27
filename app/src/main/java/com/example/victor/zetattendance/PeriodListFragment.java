@@ -9,6 +9,10 @@ import android.widget.ListView;
 
 
 import com.example.victor.zetattendance.dummy.DummyContent;
+import com.victor.database.Period;
+import com.victor.database.PeriodsDAO;
+
+import java.sql.SQLException;
 
 /**
  * A list fragment representing a list of Periods. This fragment
@@ -70,13 +74,18 @@ public class PeriodListFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PeriodsDAO periodsDAO = new PeriodsDAO(getActivity());
+        try {
+            periodsDAO.open();
+            // TODO: replace with a real list adapter.
+            setListAdapter(new ArrayAdapter<Period>(
+                    getActivity(),
+                    android.R.layout.simple_list_item_activated_1,
+                    android.R.id.text1,
+                    periodsDAO.getAllPeriods()));
+        } catch (SQLException e) {
 
-        // TODO: replace with a real list adapter.
-        setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(
-                getActivity(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                DummyContent.ITEMS));
+        }
     }
 
     @Override

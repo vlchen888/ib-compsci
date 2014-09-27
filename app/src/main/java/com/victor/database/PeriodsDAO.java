@@ -1,6 +1,7 @@
 package com.victor.database;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.sql.SQLException;
@@ -29,6 +30,19 @@ public class PeriodsDAO {
 
     public List<Period> getAllPeriods() {
         List<Period> periods = new ArrayList<Period>();
+        Cursor cursor = database.query("period", allColumns, null, null, null, null, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            periods.add(cursorToPeriod(cursor));
+            cursor.moveToNext();
+        }
         return periods;
+    }
+
+    private Period cursorToPeriod(Cursor cursor) {
+        Period period = new Period();
+        period.setId(cursor.getLong(0));
+        period.setName(cursor.getString(1));
+        return period;
     }
 }

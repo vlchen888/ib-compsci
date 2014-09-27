@@ -32,6 +32,9 @@ public class AttendanceSQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("drop table if exists period;\ndrop table if exists student;");
+        db.execSQL("drop table if exists period;");
+        db.execSQL("drop table if exists student;");
+        onCreate(db);
     }
+
 }

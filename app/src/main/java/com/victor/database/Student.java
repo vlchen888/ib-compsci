@@ -4,6 +4,11 @@ package com.victor.database;
  * Created by bchen on 9/27/14.
  */
 public class Student {
+
+    public enum AttendanceStatus {
+        PRESENT, TARDY, ABSENT
+    }
+
     private String fName;
     private String lName;
     private AttendanceStatus status;

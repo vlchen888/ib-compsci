@@ -6,5 +6,5 @@ package com.victor.database;
 public class Student {
     public String fName;
     public String lName;
-    
+
 }

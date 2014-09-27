@@ -18,7 +18,7 @@ public class AttendanceSQLiteHelper extends SQLiteOpenHelper {
     private static final String TABLE_CREATE_PERIOD = "create table period (_id integer " +
             "primary key autoincrement, name text not null);";
     private static final String TABLE_CREATE_STUDENT = "create table student (_id integer " +
-            "primary key autoincrement, first_name text, last_name text, period_id integer, absent integer);";
+            "primary key autoincrement, first_name text, last_name text, period_id integer, status integer);";
     private static final String SQL_INIT_PERIOD =
             "insert into period (name) values ('Period 0');\n" +
                     "insert into period (name) values ('Period 1');\n" +

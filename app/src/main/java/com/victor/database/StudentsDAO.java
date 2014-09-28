@@ -15,7 +15,7 @@ import java.util.List;
 public class StudentsDAO {
     private SQLiteDatabase database;
     private AttendanceSQLiteHelper dbHelper;
-    private String[] allColumns = {"_id", "first_name", "last_name", "status"};
+    private String[] allColumns = {"_id", "first_name", "last_name", "period_id", "status"};
 
     public StudentsDAO(Context context) {
         dbHelper = new AttendanceSQLiteHelper(context);
@@ -80,12 +80,23 @@ public class StudentsDAO {
         }
     }
 
+    public void updateStudent(Student aStudent) {
+        ContentValues values = new ContentValues();
+        if (aStudent.getStatus() == null) {
+            values.put("status", 0);
+        } else {
+            values.put("status", aStudent.getStatus().ordinal());
+        }
+        database.update("student", values, "_id = ?", new String[]{String.valueOf(aStudent.getId())});
+    }
+
     private Student cursorToStudent(Cursor aCursor) {
         Student aStudent = new Student();
         aStudent.setId(aCursor.getLong(0));
         aStudent.setfName(aCursor.getString(1));
         aStudent.setlName(aCursor.getString(2));
         aStudent.setPeriodId(aCursor.getLong(3));
+        aStudent.setStatus(Student.AttendanceStatus.fromOrdinal(aCursor.getInt(4)));
         return aStudent;
     }
 }

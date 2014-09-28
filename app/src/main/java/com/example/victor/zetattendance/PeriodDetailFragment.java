@@ -30,6 +30,7 @@ public class PeriodDetailFragment extends ListFragment {
      * represents.
      */
     private List<Student> students;
+    private ArrayAdapter<Student> mStudentsAdapter;
 
     public static final String ARG_ITEM_ID = "item_id";
 
@@ -49,24 +50,34 @@ public class PeriodDetailFragment extends ListFragment {
             try {
                 studentsDAO.open();
                 students = studentsDAO.getStudentsForPeriodId(periodId);
-                setListAdapter(new ArrayAdapter<Student>(
+                mStudentsAdapter = new ArrayAdapter<Student>(
                         getActivity(),
-                        android.R.layout.simple_list_item_activated_1,
+                        android.R.layout.simple_list_item_1,
                         android.R.id.text1,
-                        students));
+                        students);
+                setListAdapter(mStudentsAdapter);
             } catch (Exception e) {
                 Log.i("sumtingwong", "error", e);
             }
         }
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_period_detail, container, false);
-
-        // Show the dummy content as text in a TextView.
-        return rootView;
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        Student aStudent = (Student) l.getItemAtPosition(position);
+        int currentStatus = aStudent.getStatus().ordinal();
+        currentStatus++;
+        if (currentStatus > 2) {
+            currentStatus %= 3;
+        }
+        aStudent.setStatus(Student.AttendanceStatus.fromOrdinal(currentStatus));
+        StudentsDAO studentsDAO = new StudentsDAO(getActivity());
+        try {
+            studentsDAO.open();
+            studentsDAO.updateStudent(aStudent);
+        } catch (Exception e) {
+            Log.e("PeriodDetailFragment", "error", e);
+        }
+        mStudentsAdapter.notifyDataSetChanged();
     }
 }

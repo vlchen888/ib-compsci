@@ -77,7 +77,9 @@ public class StudentDetailActivity extends Activity {
             //
             // http://developer.android.com/design/patterns/navigation.html#up-vs-back
             //
-            NavUtils.navigateUpTo(this, new Intent(this, PeriodDetailActivity.class));
+            Intent detailIntent = new Intent(this, PeriodDetailActivity.class);
+            detailIntent.putExtra(PeriodDetailFragment.ARG_ITEM_ID, selectedPeriod.getId());
+            NavUtils.navigateUpTo(this, detailIntent);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -104,6 +106,8 @@ public class StudentDetailActivity extends Activity {
                 Log.e("StudentDetail", "Exception adding student", e);
             }
         }
-        NavUtils.navigateUpTo(this, new Intent(this, PeriodDetailActivity.class));
+        Intent detailIntent = new Intent(this, PeriodDetailActivity.class);
+        detailIntent.putExtra(PeriodDetailFragment.ARG_ITEM_ID, selectedPeriod.getId());
+        NavUtils.navigateUpTo(this, detailIntent);
     }
 }

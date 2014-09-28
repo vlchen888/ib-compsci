@@ -41,7 +41,7 @@ public class HomeActivity extends Activity {
     }
 
     public void showAttendance(View view) {
-        Intent intent = new Intent(this, AttendanceResultsActivity.class);
-        startActivity(intent);
+        //Intent intent = new Intent(this, AttendanceResultsActivity.class);
+        //startActivity(intent);
     }
 }

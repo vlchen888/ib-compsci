@@ -67,6 +67,9 @@ public class Student {
     @Override
     public String toString() {
         String s =  lName + ", " + fName + " ";
+        if (status == null) {
+            return s + "P";
+        }
         switch(status) {
             case PRESENT:
                 return s+"P";

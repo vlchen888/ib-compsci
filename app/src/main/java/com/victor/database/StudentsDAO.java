@@ -41,6 +41,17 @@ public class StudentsDAO {
         return periods;
     }
 
+    public List<Student> getBadStudents() {
+        List<Student> list = new ArrayList<Student>();
+        Cursor cursor = database.query("student", allColumns, "status = 0", null, null, null, "period_id, last_name");
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            list.add(cursorToStudent(cursor));
+            cursor.moveToNext();
+        }
+        return list;
+    }
+
     public Student addStudentToPeriod(Student aStudent, long periodId) {
         ContentValues values = new ContentValues();
         values.put("first_name", aStudent.getfName());

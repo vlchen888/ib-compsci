@@ -30,6 +30,7 @@ public class PeriodDetailFragment extends ListFragment {
      * represents.
      */
     private List<Student> students;
+    private ArrayAdapter<Student> mStudentsAdapter;
 
     public static final String ARG_ITEM_ID = "item_id";
 
@@ -49,11 +50,12 @@ public class PeriodDetailFragment extends ListFragment {
             try {
                 studentsDAO.open();
                 students = studentsDAO.getStudentsForPeriodId(periodId);
-                setListAdapter(new ArrayAdapter<Student>(
+                mStudentsAdapter = new ArrayAdapter<Student>(
                         getActivity(),
                         android.R.layout.simple_list_item_1,
                         android.R.id.text1,
-                        students));
+                        students);
+                setListAdapter(mStudentsAdapter);
             } catch (Exception e) {
                 Log.i("sumtingwong", "error", e);
             }
@@ -76,6 +78,6 @@ public class PeriodDetailFragment extends ListFragment {
         } catch (Exception e) {
             Log.e("PeriodDetailFragment", "error", e);
         }
-        l.refreshDrawableState();
+        mStudentsAdapter.notifyDataSetChanged();
     }
 }

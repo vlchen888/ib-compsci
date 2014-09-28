@@ -6,9 +6,18 @@ package com.victor.database;
 public class Student {
 
     public enum AttendanceStatus {
-        PRESENT, TARDY, ABSENT;
+        PRESENT("Present"), TARDY("Tardy"), ABSENT("Absent");
         private static AttendanceStatus[] allValues = values();
         public static AttendanceStatus fromOrdinal(int n) {return allValues[n];}
+
+        private String description;
+        AttendanceStatus(String description) {
+            this.description = description;
+        }
+
+        public String toString() {
+            return description;
+        }
     }
     private long id;
     private long periodId;
@@ -66,19 +75,7 @@ public class Student {
 
     @Override
     public String toString() {
-        String s =  lName + ", " + fName + " ";
-        if (status == null) {
-            return s + "P";
-        }
-        switch(status) {
-            case PRESENT:
-                return s+"P";
-            case TARDY:
-                return s+"T";
-            case ABSENT:
-                return s+"A";
-        }
-
-        return ""; //never reached
+        return lName + ", " + fName;
     }
+
 }

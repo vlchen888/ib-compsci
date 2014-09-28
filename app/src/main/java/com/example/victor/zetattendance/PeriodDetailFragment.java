@@ -1,7 +1,7 @@
 package com.example.victor.zetattendance;
 
-import android.app.Fragment;
 import android.app.ListFragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,12 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
-import com.victor.database.Period;
 import com.victor.database.Student;
 import com.victor.database.StudentsDAO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -50,10 +49,9 @@ public class PeriodDetailFragment extends ListFragment {
             try {
                 studentsDAO.open();
                 students = studentsDAO.getStudentsForPeriodId(periodId);
-                mStudentsAdapter = new ArrayAdapter<Student>(
+                mStudentsAdapter = new StudentAttendanceAdapter(
                         getActivity(),
                         android.R.layout.simple_list_item_1,
-                        android.R.id.text1,
                         students);
                 setListAdapter(mStudentsAdapter);
             } catch (Exception e) {
@@ -79,5 +77,51 @@ public class PeriodDetailFragment extends ListFragment {
             Log.e("PeriodDetailFragment", "error", e);
         }
         mStudentsAdapter.notifyDataSetChanged();
+    }
+
+
+
+    public class StudentAttendanceAdapter extends ArrayAdapter<Student> {
+        private List<Student> students;
+        public StudentAttendanceAdapter(Context context, int textViewResourceId, List<Student> items) {
+            super(context,textViewResourceId,items);
+            students=items;
+        }
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View v = convertView;
+            if (v == null) {
+                LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                v = vi.inflate(R.layout.student_row, null);
+            }
+            /*
+            v.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    //do your sorting stuff here
+                }
+            });
+            */
+            Student s = students.get(position);
+            if(s!=null) {
+                TextView t = (TextView) v.findViewById(R.id.studentName);
+                TextView u = (TextView) v.findViewById(R.id.studentStatus);
+                if (t != null) {
+                    t.setText(s.toString());
+                    u.setText(s.getStatus().toString());
+                    switch(s.getStatus()) {
+                        case PRESENT:
+                            v.setBackgroundColor(0xFFFFFFFF);
+                            break;
+                        case ABSENT:
+                            v.setBackgroundColor(0xFFFF6666);
+                            break;
+                        case TARDY:
+                            v.setBackgroundColor(0xFFFFFF00);
+                            break;
+                    }
+                }
+            }
+            return v;
+        }
     }
 }

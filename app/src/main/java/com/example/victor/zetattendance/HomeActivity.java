@@ -39,4 +39,9 @@ public class HomeActivity extends Activity {
         Intent intent = new Intent(this, PeriodListActivity.class);
         startActivity(intent);
     }
+
+    public void showAttendance(View view) {
+        Intent intent = new Intent(this, AttendanceResultsActivity.class);
+        startActivity(intent);
+    }
 }

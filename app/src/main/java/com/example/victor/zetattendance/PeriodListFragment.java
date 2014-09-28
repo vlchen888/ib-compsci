@@ -76,7 +76,8 @@ public class PeriodListFragment extends ListFragment {
         PeriodsDAO periodsDAO = new PeriodsDAO(getActivity());
         try {
             periodsDAO.open();
-            // TODO: replace with a real list adapter.
+            // TODO: replace with a real list adapter
+
             setListAdapter(new ArrayAdapter<Period>(
                     getActivity(),
                     android.R.layout.simple_list_item_activated_1,

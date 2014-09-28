@@ -45,7 +45,11 @@ public class StudentsDAO {
         ContentValues values = new ContentValues();
         values.put("first_name", aStudent.getfName());
         values.put("last_name", aStudent.getlName());
-        values.put("status", aStudent.getStatus().ordinal());
+        if (aStudent.getStatus() == null) {
+            values.put("status", 0);
+        } else {
+            values.put("status", aStudent.getStatus().ordinal());
+        }
         values.put("period_id", periodId);
         long insertId = database.insert("student", null, values);
         return getStudentById(insertId);

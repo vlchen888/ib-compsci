@@ -32,6 +32,14 @@
             android:name=".StudentDetailActivity"
             android:label="@string/title_activity_student_detail" >
         </activity>
+        <activity
+            android:name=".AttendanceResults"
+            android:label="@string/title_activity_attendance_results" >
+        </activity>
+        <activity
+            android:name=".AttendanceResultsActivity"
+            android:label="@string/title_activity_attendance_results" >
+        </activity>
     </application>
 
 </manifest>

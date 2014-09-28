@@ -3,10 +3,12 @@ package com.example.victor.zetattendance;
 import android.app.Fragment;
 import android.app.ListFragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.victor.database.Period;
 import com.victor.database.Student;
@@ -22,11 +24,13 @@ import java.util.List;
  * in two-pane mode (on tablets) or a {@link PeriodDetailActivity}
  * on handsets.
  */
-public class PeriodDetailFragment extends Fragment {
+public class PeriodDetailFragment extends ListFragment {
     /**
      * The fragment argument representing the item ID that this fragment
      * represents.
      */
+    private List<Student> students;
+
     public static final String ARG_ITEM_ID = "item_id";
 
     /**
@@ -39,26 +43,23 @@ public class PeriodDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (getArguments().containsKey(ARG_ITEM_ID)) {
             long periodId = getArguments().getLong(ARG_ITEM_ID);
             StudentsDAO studentsDAO = new StudentsDAO(getActivity());
             try {
                 studentsDAO.open();
-                List<Student> students = studentsDAO.getStudentsForPeriodId(periodId);
-
-                /*
+                students = studentsDAO.getStudentsForPeriodId(periodId);
                 setListAdapter(new ArrayAdapter<Student>(
                         getActivity(),
                         android.R.layout.simple_list_item_activated_1,
                         android.R.id.text1,
                         students));
-                        */
             } catch (Exception e) {
-
+                Log.i("sumtingwong", "error", e);
             }
         }
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

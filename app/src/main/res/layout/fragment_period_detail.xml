@@ -1,4 +1,4 @@
-<LinearLayout   xmlns:android="http://schemas.android.com/apk/res/android"
+<fragment   xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/period_detail"
     style="?android:attr/textAppearanceLarge"
@@ -8,14 +8,9 @@
     android:padding="16dp"
     android:textIsSelectable="true"
     tools:context="com.example.victor.zetattendance.PeriodDetailFragment"
-    android:weightSum="1">
+    tools:layout="@android:layout/list_content">
 
-   <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/students_list"
-        android:layout_gravity="center_horizontal" />
-</LinearLayout>
+</fragment>
 <!--
 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:tools="http://schemas.android.com/tools"

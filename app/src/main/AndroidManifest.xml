@@ -28,6 +28,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.victor.zetattendance.PeriodListActivity" />
         </activity>
+        <activity
+            android:name=".StudentDetailActivity"
+            android:label="@string/title_activity_student_detail" >
+        </activity>
     </application>
 
 </manifest>

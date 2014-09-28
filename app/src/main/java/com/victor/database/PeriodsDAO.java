@@ -39,6 +39,20 @@ public class PeriodsDAO {
         return periods;
     }
 
+    public Period getPeriodForId(long id) {
+        Cursor mCursor = database.query("period",
+                allColumns,
+                "_id = ?",
+                new String[]{String.valueOf(id)},
+                null, null, null);
+        mCursor.moveToFirst();
+        if (!mCursor.isAfterLast()) {
+            return cursorToPeriod(mCursor);
+        } else {
+            return null;
+        }
+    }
+
     private Period cursorToPeriod(Cursor cursor) {
         Period period = new Period();
         period.setId(cursor.getLong(0));

@@ -6,16 +6,38 @@ package com.victor.database;
 public class Student {
 
     public enum AttendanceStatus {
-        PRESENT, TARDY, ABSENT
+        PRESENT, TARDY, ABSENT;
+        private static AttendanceStatus[] allValues = values();
+        public static AttendanceStatus fromOrdinal(int n) {return allValues[n];}
     }
-
+    private long id;
+    private long periodId;
     private String fName;
     private String lName;
     private AttendanceStatus status;
 
+    public Student() {
+    }
+
     public Student(String f, String l) {
         fName = f;
         lName = l;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getPeriodId() {
+        return periodId;
+    }
+
+    public void setPeriodId(long periodId) {
+        this.periodId = periodId;
     }
 
     public String getfName() {

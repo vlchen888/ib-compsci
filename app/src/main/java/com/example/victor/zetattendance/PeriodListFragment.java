@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 
-import com.example.victor.zetattendance.dummy.DummyContent;
 import com.victor.database.Period;
 import com.victor.database.PeriodsDAO;
 
@@ -51,7 +50,7 @@ public class PeriodListFragment extends ListFragment {
         /**
          * Callback for when an item has been selected.
          */
-        public void onItemSelected(String id);
+        public void onItemSelected(long id);
     }
 
     /**
@@ -60,7 +59,7 @@ public class PeriodListFragment extends ListFragment {
      */
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onItemSelected(String id) {
+        public void onItemSelected(long id) {
         }
     };
 
@@ -125,7 +124,8 @@ public class PeriodListFragment extends ListFragment {
 
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+        Period selectedPeriod = (Period)listView.getItemAtPosition(position);
+        mCallbacks.onItemSelected(selectedPeriod.getId());
     }
 
     @Override

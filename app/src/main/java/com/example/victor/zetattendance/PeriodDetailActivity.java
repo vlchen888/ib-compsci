@@ -4,7 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.v4.app.NavUtils;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+
+import com.victor.database.Period;
+import com.victor.database.PeriodsDAO;
 
 
 /**
@@ -17,6 +22,8 @@ import android.view.MenuItem;
  * more than a {@link PeriodDetailFragment}.
  */
 public class PeriodDetailActivity extends Activity {
+
+    private Period selectedPeriod;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,14 +45,24 @@ public class PeriodDetailActivity extends Activity {
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
+            PeriodsDAO dao = new PeriodsDAO(this);
             Bundle arguments = new Bundle();
-            arguments.putString(PeriodDetailFragment.ARG_ITEM_ID,
-                    getIntent().getStringExtra(PeriodDetailFragment.ARG_ITEM_ID));
-            PeriodDetailFragment fragment = new PeriodDetailFragment();
-            fragment.setArguments(arguments);
-            getFragmentManager().beginTransaction()
-                    .add(R.id.period_detail_container, fragment)
-                    .commit();
+            try {
+                long periodId = getIntent().getLongExtra(PeriodDetailFragment.ARG_ITEM_ID, 0);
+                dao.open();
+                selectedPeriod = dao.getPeriodForId(periodId);
+                setTitle(selectedPeriod.getName());
+                dao.close();
+
+                arguments.putLong(PeriodDetailFragment.ARG_ITEM_ID, periodId);
+                PeriodDetailFragment fragment = new PeriodDetailFragment();
+                fragment.setArguments(arguments);
+                getFragmentManager().beginTransaction()
+                        .add(R.id.period_detail_container, fragment)
+                        .commit();
+            } catch (Exception e) {
+
+            }
         }
     }
 
@@ -62,7 +79,18 @@ public class PeriodDetailActivity extends Activity {
             //
             NavUtils.navigateUpTo(this, new Intent(this, PeriodListActivity.class));
             return true;
+        } else if (id == R.id.add_student) {
+            Intent studentDetailIntent = new Intent(this, StudentDetailActivity.class);
+            studentDetailIntent.putExtra(StudentDetailActivity.PERIOD_ID_ARG, selectedPeriod.getId());
+            startActivity(studentDetailIntent);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.period_menu, menu);
+        return true;
     }
 }

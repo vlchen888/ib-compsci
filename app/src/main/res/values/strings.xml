@@ -6,5 +6,6 @@
     <string name="action_settings">Settings</string>
     <string name="title_period_list">Periods</string>
     <string name="title_period_detail">Period Detail</string>
+    <string name="title_activity_student_detail">StudentDetailActivity</string>
 
 </resources>

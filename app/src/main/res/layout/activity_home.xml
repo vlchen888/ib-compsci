@@ -11,24 +11,20 @@
 
     <Button
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/activity_vertical_margin"
+        android:layout_height="wrap_content"
         android:text="Period List"
         android:id="@+id/PeriodBtn"
         android:onClick="showPeriod"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        />
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/buttonHeight"
+        android:layout_height="wrap_content"
         android:text="Attendance List"
         android:id="@+id/AttendanceBtn"
         android:onClick="showAttendance"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/PeriodBtn"
         android:layout_alignLeft="@+id/PeriodBtn"
         android:layout_alignStart="@+id/PeriodBtn" />
 

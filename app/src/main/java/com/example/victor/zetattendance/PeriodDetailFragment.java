@@ -79,8 +79,6 @@ public class PeriodDetailFragment extends ListFragment {
         mStudentsAdapter.notifyDataSetChanged();
     }
 
-
-
     public class StudentAttendanceAdapter extends ArrayAdapter<Student> {
         private List<Student> students;
         public StudentAttendanceAdapter(Context context, int textViewResourceId, List<Student> items) {
@@ -105,7 +103,7 @@ public class PeriodDetailFragment extends ListFragment {
             if(s!=null) {
                 TextView t = (TextView) v.findViewById(R.id.studentName);
                 TextView u = (TextView) v.findViewById(R.id.studentStatus);
-                if (t != null) {
+                if (t != null && u != null) {
                     t.setText(s.toString());
                     u.setText(s.getStatus().toString());
                     switch(s.getStatus()) {

@@ -2,6 +2,7 @@ package com.example.victor.zetattendance;
 
 import android.app.Activity;
 import android.app.ListFragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 
 import com.example.victor.zetattendance.dummy.DummyContent;
+import com.victor.database.PeriodsDAO;
 import com.victor.database.Student;
 import com.victor.database.StudentsDAO;
 
@@ -61,10 +63,9 @@ public class AttendanceResultsFragment extends Fragment implements AbsListView.O
             try {
                 studentsDAO.open();
                 students = studentsDAO.getBadStudents();
-                mAdapter = new ArrayAdapter<Student>(
+                mAdapter = new BadStudentAdapter(
                         getActivity(),
                         android.R.layout.simple_list_item_activated_1,
-                        android.R.id.text1,
                         students);
             } catch (Exception e) {
                 Log.i("sumtingwong", "error", e);
@@ -79,11 +80,8 @@ public class AttendanceResultsFragment extends Fragment implements AbsListView.O
         View view = inflater.inflate(R.layout.fragment_attendanceresultsfragment, container, false);
 
         // Set the adapter
-        mListView = (AbsListView) view.findViewById(android.R.id.list);
+        mListView = (AbsListView) view.findViewById(R.id.attendance_results_list);
         ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
-
-        // Set OnItemClickListener so we can be notified on item clicks
-        mListView.setOnItemClickListener(this);
 
         return view;
     }
@@ -141,6 +139,52 @@ public class AttendanceResultsFragment extends Fragment implements AbsListView.O
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(String id);
+    }
+
+    public class BadStudentAdapter extends ArrayAdapter<Student> {
+            private List<Student> students;
+            public BadStudentAdapter(Context context, int textViewResourceId, List<Student> items) {
+                super(context,textViewResourceId,items);
+                students=items;
+            }
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View v = convertView;
+                if (v == null) {
+                    LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    v=vi.inflate(R.layout.student_attendance_row, null);
+                }
+                Student s = students.get(position);
+                if(s!=null) {
+                    TextView t1 = (TextView) v.findViewById(R.id.attendancePeriod);
+                    TextView t2 = (TextView) v.findViewById(R.id.attendanceName);
+                    TextView t3 = (TextView) v.findViewById(R.id.attendanceStatus);
+                    if (t1 != null && t2 != null && t3 != null) {
+                        PeriodsDAO periodsDAO = new PeriodsDAO(getActivity());
+                        try {
+                            periodsDAO.open();
+                        }
+                        catch(Exception e)
+                        {
+
+                        }
+                        t1.setText(s.toString());
+                        t2.setText(s.getStatus().toString());
+                        t3.setText(periodsDAO.getPeriodForId(s.getPeriodId()).toString());
+                        switch(s.getStatus()) {
+                            case PRESENT:
+                                v.setBackgroundColor(0xFFFFFFFF);
+                                break;
+                            case ABSENT:
+                                v.setBackgroundColor(0xFFFF6666);
+                                break;
+                            case TARDY:
+                                v.setBackgroundColor(0xFFFFFF00);
+                                break;
+                        }
+                    }
+                }
+                return v;
+            }
     }
 
 }

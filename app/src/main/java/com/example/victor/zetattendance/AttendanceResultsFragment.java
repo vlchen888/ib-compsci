@@ -66,7 +66,7 @@ public class AttendanceResultsFragment extends Fragment implements AbsListView.O
                 mAdapter = new BadStudentAdapter(
                         getActivity(),
                         android.R.layout.simple_list_item_activated_1,
-                        students);
+                        students);//New data base corrected for the Updated sheet
             } catch (Exception e) {
                 Log.i("sumtingwong", "error", e);
             }

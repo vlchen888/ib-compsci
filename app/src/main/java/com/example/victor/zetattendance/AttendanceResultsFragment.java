@@ -67,6 +67,7 @@ public class AttendanceResultsFragment extends Fragment implements AbsListView.O
                         getActivity(),
                         android.R.layout.simple_list_item_activated_1,
                         students);
+                studentsDAO.close();
             } catch (Exception e) {
                 Log.i("sumtingwong", "error", e);
             }
@@ -162,14 +163,15 @@ public class AttendanceResultsFragment extends Fragment implements AbsListView.O
                         PeriodsDAO periodsDAO = new PeriodsDAO(getActivity());
                         try {
                             periodsDAO.open();
+                            t1.setText(s.toString());
+                            t2.setText(s.getStatus().toString());
+                            t3.setText(periodsDAO.getPeriodForId(s.getPeriodId()).toString());
+                            periodsDAO.close();
                         }
                         catch(Exception e)
                         {
 
                         }
-                        t1.setText(s.toString());
-                        t2.setText(s.getStatus().toString());
-                        t3.setText(periodsDAO.getPeriodForId(s.getPeriodId()).toString());
                         switch(s.getStatus()) {
                             case PRESENT:
                                 v.setBackgroundColor(0xFFFFFFFF);

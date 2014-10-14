@@ -87,6 +87,8 @@ public class StudentsDAO {
         } else {
             values.put("status", aStudent.getStatus().ordinal());
         }
+        values.put("first_name", aStudent.getfName());
+        values.put("last_name", aStudent.getlName());
         database.update("student", values, "_id = ?", new String[]{String.valueOf(aStudent.getId())});
     }
 
@@ -98,5 +100,10 @@ public class StudentsDAO {
         aStudent.setPeriodId(aCursor.getLong(3));
         aStudent.setStatus(Student.AttendanceStatus.fromOrdinal(aCursor.getInt(4)));
         return aStudent;
+    }
+
+    public void deleteStudent(Student aStudent) {
+        database.delete("student", "_id = ?", new String[]{String.valueOf(aStudent.getId())});
+
     }
 }

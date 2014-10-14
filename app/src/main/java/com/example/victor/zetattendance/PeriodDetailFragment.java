@@ -2,11 +2,13 @@ package com.example.victor.zetattendance;
 
 import android.app.ListFragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -30,6 +32,7 @@ public class PeriodDetailFragment extends ListFragment {
      */
     private List<Student> students;
     private ArrayAdapter<Student> mStudentsAdapter;
+    private long selectedPeriodId;
 
     public static final String ARG_ITEM_ID = "item_id";
 
@@ -45,6 +48,7 @@ public class PeriodDetailFragment extends ListFragment {
         super.onCreate(savedInstanceState);
         if (getArguments().containsKey(ARG_ITEM_ID)) {
             long periodId = getArguments().getLong(ARG_ITEM_ID);
+            selectedPeriodId=periodId;
             StudentsDAO studentsDAO = new StudentsDAO(getActivity());
             try {
                 studentsDAO.open();
@@ -73,11 +77,30 @@ public class PeriodDetailFragment extends ListFragment {
         try {
             studentsDAO.open();
             studentsDAO.updateStudent(aStudent);
+            studentsDAO.close();
         } catch (Exception e) {
             Log.e("PeriodDetailFragment", "error", e);
         }
         mStudentsAdapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> listView, View arg1,
+                                           int position, long arg3) {
+                Student selectedStudent = (Student)listView.getItemAtPosition(position);
+                Intent studentDetailIntent = new Intent(getActivity(), StudentDetailActivity.class);
+                studentDetailIntent.putExtra(StudentDetailActivity.PERIOD_ID_ARG, selectedPeriodId);
+                studentDetailIntent.putExtra(StudentDetailActivity.STUDENT_ID_ARG, selectedStudent.getId());
+                startActivity(studentDetailIntent);
+                return false;
+            }
+        });
+    }
+
 
     public class StudentAttendanceAdapter extends ArrayAdapter<Student> {
         private List<Student> students;

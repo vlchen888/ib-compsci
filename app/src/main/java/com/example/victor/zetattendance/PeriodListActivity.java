@@ -60,7 +60,7 @@ public class PeriodListActivity extends Activity
      */
     @Override
     public void onItemSelected(long id) {
-        if (mTwoPane) {
+        if (false) { //mTwoPane) {
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a
             // fragment transaction.

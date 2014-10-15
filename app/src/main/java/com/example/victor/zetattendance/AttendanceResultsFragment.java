@@ -163,9 +163,9 @@ public class AttendanceResultsFragment extends Fragment implements AbsListView.O
                         PeriodsDAO periodsDAO = new PeriodsDAO(getActivity());
                         try {
                             periodsDAO.open();
-                            t1.setText(s.toString());
-                            t2.setText(s.getStatus().toString());
-                            t3.setText(periodsDAO.getPeriodForId(s.getPeriodId()).toString());
+                            t1.setText(periodsDAO.getPeriodForId(s.getPeriodId()).toString());
+                            t2.setText(s.toString());
+                            t3.setText(s.getStatus().toString());
                             periodsDAO.close();
                         }
                         catch(Exception e)

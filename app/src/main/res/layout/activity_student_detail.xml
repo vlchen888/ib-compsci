@@ -74,6 +74,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:background="#ffff100b"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
 </RelativeLayout>

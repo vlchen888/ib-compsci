@@ -19,10 +19,15 @@ public class Student {
             return description;
         }
     }
+    //unique id for storing and retrieving from database
     private long id;
+    //id of period in database
     private long periodId;
+    //first name of student
     private String fName;
+    //last name of student; list is sorted by last name
     private String lName;
+    //present/tardy/absent
     private AttendanceStatus status;
 
     public Student() {

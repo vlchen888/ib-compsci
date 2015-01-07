@@ -57,6 +57,18 @@ public class StudentDetailActivity extends Activity {
                     Button saveButton = (Button)findViewById(R.id.save_button);
                     saveButton.setText("New Student");
                 }
+                else {
+                    StudentsDAO studentsDAO = new StudentsDAO(this);
+                    studentsDAO.open();
+                    selectedStudent= studentsDAO.getStudentById(studentId);
+                    studentsDAO.close();
+                    EditText fName = (EditText) findViewById(R.id.first_name);
+                    fName.setText(selectedStudent.getfName());
+                    EditText lName = (EditText) findViewById(R.id.last_name);
+                    lName.setText(selectedStudent.getlName());
+                    Button dBtn = (Button) findViewById(R.id.delete_button);
+                    dBtn.setVisibility(View.VISIBLE);
+                }
             } catch (Exception e) {
 
             }
@@ -106,8 +118,37 @@ public class StudentDetailActivity extends Activity {
                 Log.e("StudentDetail", "Exception adding student", e);
             }
         }
+        else {
+            selectedStudent.setfName(fName);
+            selectedStudent.setlName(lName);
+            selectedStudent.setPeriodId(selectedPeriod.getId());
+            StudentsDAO studentDao = new StudentsDAO(this);
+            try {
+                studentDao.open();
+                studentDao.updateStudent(selectedStudent);
+                studentDao.close();
+            } catch (Exception e) {
+                Log.e("StudentDetail", "Exception saving student", e);
+            }
+        }
         Intent detailIntent = new Intent(this, PeriodDetailActivity.class);
         detailIntent.putExtra(PeriodDetailFragment.ARG_ITEM_ID, selectedPeriod.getId());
         NavUtils.navigateUpTo(this, detailIntent);
+    }
+
+    public void deleteStudent(View view) {
+        StudentsDAO studentsDAO = new StudentsDAO(this);
+        try {
+            studentsDAO.open();
+            studentsDAO.deleteStudent(selectedStudent);
+            studentsDAO.close();
+            Intent detailIntent = new Intent(this, PeriodDetailActivity.class);
+            detailIntent.putExtra(PeriodDetailFragment.ARG_ITEM_ID, selectedPeriod.getId());
+            NavUtils.navigateUpTo(this, detailIntent);
+        }
+        catch (Exception E) {
+
+        }
+
     }
 }

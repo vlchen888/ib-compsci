@@ -64,4 +64,16 @@
         android:layout_alignRight="@+id/last_name"
         android:layout_alignEnd="@+id/last_name" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete Student"
+        android:id="@+id/delete_button"
+        android:onClick="deleteStudent"
+        android:layout_alignTop="@+id/save_button"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="#ffff100b"
+        android:visibility="invisible" />
+
 </RelativeLayout>
